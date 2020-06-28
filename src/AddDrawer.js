@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import PropTypes from "prop-types";
-import { Drawer, Form, Input, Button } from "antd";
+import { Drawer, Form, Input, Button, Space } from "antd";
 
 const AddDrawer = ({ show, handleOnClose, onFinish, onFinishFailed }) => {
   const initialValues = { firstName: "", lastName: "", phoneNumber: null };
@@ -27,6 +27,7 @@ const AddDrawer = ({ show, handleOnClose, onFinish, onFinishFailed }) => {
         initialValues={initialValues}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
+        layout="vertical"
       >
         <Form.Item
           label="First Name"
@@ -51,22 +52,29 @@ const AddDrawer = ({ show, handleOnClose, onFinish, onFinishFailed }) => {
             { required: true, message: "Please input your phone number!" },
           ]}
         >
-          <Input />
+          <Input type="tel" />
         </Form.Item>
 
         <Form.Item shouldUpdate>
           {() => (
-            <Button
-              type="primary"
-              htmlType="submit"
-              disabled={
-                !form.isFieldsTouched(true) ||
-                form.getFieldsError().filter(({ errors }) => errors.length)
-                  .length
-              }
-            >
-              Log in
-            </Button>
+            <Fragment>
+              <Space>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  disabled={
+                    !form.isFieldsTouched(true) ||
+                    form.getFieldsError().filter(({ errors }) => errors.length)
+                      .length
+                  }
+                >
+                  Add
+                </Button>
+                <Button htmlType="button" onClick={() => form.resetFields()}>
+                  Reset
+                </Button>
+              </Space>
+            </Fragment>
           )}
         </Form.Item>
       </Form>
